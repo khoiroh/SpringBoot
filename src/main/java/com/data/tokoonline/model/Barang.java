@@ -1,10 +1,12 @@
 package com.data.tokoonline.model;
 
+import com.data.tokoonline.auditing.AudiTable;
+
 import javax.persistence.*;
 
 @Entity
 @Table (name = "barang")
-public class Barang {
+public class Barang extends AudiTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

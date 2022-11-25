@@ -14,19 +14,21 @@ public class BarangServiceImpl implements BarangService{
     private BarangRepository barangRepository;
 
     @Override
-    public Barang addBarang(Barang barang) {return barangRepository.save(barang);}
+    public Barang addBarang(Barang barang) {
+        try {
+            return barangRepository.save(barang);
+
+        }catch (Exception e){
+        throw new InternalEror("Data Harus diisi Semua");}
+    }
 
     @Override
     public Object getBarangById(Long id) {
-        var barang = barangRepository.findById(id).orElseThrow(() -> new NotFoundException("Id tidak ditemukan"));
-        try {
-            return barangRepository.findById(id);
-        } catch (Exception e) {
-            throw new InternalEror("Kesalahan memunculkan data");    }
+        return barangRepository.findById(id).orElseThrow(() -> new NotFoundException("Id tidak ditemukan"));
     }
     @Override
     public Barang editBarangById(Long id, String name, float price, Integer count, Integer reting, String description, boolean publish){
-        Barang barang = barangRepository.findById(id).get();
+        Barang barang = barangRepository.findById(id).orElseThrow(()->new NotFoundException("Id tidak ditemukan"));
         barang.setName(name);
         barang.setPrice(price);
         barang.setCount(count);
